@@ -1,0 +1,10 @@
+{
+    "name": "b6dbde/notes-app",
+    "description": "nothing to look at in here",
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "require": {}
+}
