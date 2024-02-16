@@ -2,8 +2,12 @@
 
 namespace App\Models;
 
-class NoteModel
+use \App\Core\Database as db;
+
+class NoteModel extends \App\Core\ActiveRecordEntity
 {
-    function __construct(private $id, private $title, private $data)
-    {}
+    public static function getTableName() : string
+    {
+        return 'note';
+    }
 }
