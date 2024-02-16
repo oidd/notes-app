@@ -3,11 +3,18 @@
 namespace App\Controllers;
 
 use App\Core\Controller;
+use App\Models\NoteModel;
+use App\Models\UserModel;
 
 class HomeController extends Controller 
 {
     public function index()
+    {}
+
+    private function isUserLoggedId()
     {
-        echo 'oh hello';
+        return  isset($_SESSION['logged_user_id']) &&
+                !empty($_SESSION['logged_user_id'])
+                ;
     }
 }
