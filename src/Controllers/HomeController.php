@@ -9,12 +9,7 @@ use App\Models\UserModel;
 class HomeController extends Controller 
 {
     public function index()
-    {}
-
-    private function isUserLoggedId()
     {
-        return  isset($_SESSION['logged_user_id']) &&
-                !empty($_SESSION['logged_user_id'])
-                ;
+        $this->proceedView('homePage', array());
     }
 }

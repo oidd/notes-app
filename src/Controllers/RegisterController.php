@@ -14,10 +14,10 @@ class RegisterController extends \App\Core\Controller
             $u->username = $_POST['username'];
             $u->hashedPassword = md5($_POST['password']);
             $u->save();
-            header("Location:/login");
+            self::redirect("login");
         }
 
-        require "src/Views/ttreg.php";
+        $this->proceedView("ttreg", array());
     }
 
     private function isCredentialsProvided() : bool

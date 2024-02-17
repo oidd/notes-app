@@ -8,11 +8,6 @@ class LoginController extends \App\Core\Controller
 {
     public function index()
     {
-        if ($this->isUserLoggedIn())
-        {
-            header("Location:/");
-        }
-
         if ($this->isCredentialsHasBeenSent())
         {
             if (UserModel::isUserExists($_POST['username']))
@@ -20,7 +15,7 @@ class LoginController extends \App\Core\Controller
                 if (UserModel::isUserPasswordMatches($_POST['username'], $_POST['password']))
                 {
                     $_SESSION['logged_user_id'] = UserModel::getUserByUsername($_POST['username'])->getId(); 
-                    header("Refresh:0");
+                    self::redirect('/');
                 }
                 $err[] = "incorrect password";
             }
@@ -28,23 +23,13 @@ class LoginController extends \App\Core\Controller
                 $err[] = "this user doesn't exist";
         }
 
-    }
-
-    private function isUserLoggedIn() : bool
-    {
-        if (isset($_SESSION['logged_user_id']))
-            return true;
-        return false;
+        $this->proceedView('ttlogin', array());
     }
 
     private function isCredentialsHasBeenSent() : bool
     {
-        if (
-            isset($_POST['username']) ||
-            isset($_POST['password'])
-        )
-        return true;
-
-        return false;
+        return  isset($_POST['username']) && !empty($_POST['username']) &&
+                isset($_POST['password']) && !empty($_POST['password'])
+                ;
     }
 }
