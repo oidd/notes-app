@@ -19,7 +19,8 @@ class NoteController extends \App\Core\Controller
         $n = NoteModel::getNotesByUserId($u->getId());
 
         $viewData = [
-            'notes' => $n
+            'notes' => $n,
+            'username' => $u->username
         ];
 
         $this->proceedView('notesPage', $viewData);

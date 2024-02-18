@@ -10,6 +10,6 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $this->proceedView('homePage', array());
+        $this->proceedView('homeView', array());
     }
 }

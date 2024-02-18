@@ -1,0 +1,23 @@
+form {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 3;
+    justify-content: center;
+    width: 70%;
+}
+
+form>input {
+    margin-bottom: 20px;
+    border-radius: 10px;
+    border-width: 1px;
+    padding-left: 10px;
+}
+
+input:last-child {
+    background-color: #B1D9F2;
+    color: #164147;
+}
+
+input:last-child:hover {
+    background-color: #9db5c5;
+}

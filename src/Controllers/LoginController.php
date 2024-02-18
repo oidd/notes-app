@@ -6,6 +6,12 @@ use App\Models\UserModel;
 
 class LoginController extends \App\Core\Controller
 {
+    function __construct()
+    {
+        if ($this->isUserLogged())
+            self::redirect('/note');
+    }
+
     public function index()
     {
         if ($this->isCredentialsHasBeenSent())
@@ -15,7 +21,7 @@ class LoginController extends \App\Core\Controller
                 if (UserModel::isUserPasswordMatches($_POST['username'], $_POST['password']))
                 {
                     $_SESSION['logged_user_id'] = UserModel::getUserByUsername($_POST['username'])->getId(); 
-                    self::redirect('/');
+                    self::refresh();
                 }
                 $err[] = "incorrect password";
             }
@@ -23,7 +29,7 @@ class LoginController extends \App\Core\Controller
                 $err[] = "this user doesn't exist";
         }
 
-        $this->proceedView('ttlogin', array());
+        $this->proceedView('loginView', array());
     }
 
     private function isCredentialsHasBeenSent() : bool
