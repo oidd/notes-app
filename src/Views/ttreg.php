@@ -2,21 +2,34 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="src/Static/css/homeStyles.css"> -->
+    <?php include $elementsPath . "links.php"?>
+    <link rel="stylesheet" href="src/Static/css/loginStyles.css">
     <title>Registration</title>
 </head>
 <body>
-    <h2>Registration</h2>
-    <form method="POST">
-        <div>
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required>
+    <div class="main-window">
+        <div class="welcome-window">
+            <div class="inner">
+                <div class="title">
+                    Registration
+                </div>
+                <div class="lower-items">
+                    <div class="error-message">
+                        <?php 
+                            if (isset($err))
+                                echo $err;
+                        ?>
+                    </div>
+                    <form method="POST">
+                        <input name="username" type="text" placeholder="login" required>
+                        <input name="password" type="password" placeholder="password" required>
+                        <input name="passwordSubmit" type="password" placeholder="repeat password" required>
+                        <button type="submit" class="button">Submit</button>
+                    </form>
+                </div>
+            </div>
         </div>
-        <div>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
-        </div>
-        <button type="submit">Registration</button>
-    </form>
+    </div>
 </body>
 </html>

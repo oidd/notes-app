@@ -16,23 +16,39 @@ class LoginController extends \App\Core\Controller
     {
         if ($this->isCredentialsHasBeenSent())
         {
-            if (UserModel::isUserExists($_POST['username']))
+            if (!$this->isAllCredentialsHasBeenSent())
             {
-                if (UserModel::isUserPasswordMatches($_POST['username'], $_POST['password']))
-                {
-                    $_SESSION['logged_user_id'] = UserModel::getUserByUsername($_POST['username'])->getId(); 
-                    self::refresh();
-                }
-                $err[] = "incorrect password";
+                $viewArgs['err'][] = 'Fill all the inputs';
+                $this->proceedView('loginView', $viewArgs);
             }
-            else
-                $err[] = "this user doesn't exist";
+
+            if (!UserModel::isUserExists($_POST['username']))
+            {
+                $viewArgs['err'] = 'Account with this username is not exists';                
+                $this->proceedView('loginView', $viewArgs);
+            }
+            
+            if (!UserModel::isUserPasswordMatches($_POST['username'], $_POST['password']))
+            {
+                $viewArgs['err'] = 'Incorrect password';
+                $this->proceedView('loginView', $viewArgs);  
+            }
+            
+            $_SESSION['logged_user_id'] = UserModel::getUserByUsername($_POST['username'])->getId(); 
+            self::refresh();
         }
 
         $this->proceedView('loginView', array());
     }
 
     private function isCredentialsHasBeenSent() : bool
+    {
+        return  isset($_POST['username']) || !empty($_POST['username']) ||
+                isset($_POST['password']) || !empty($_POST['password'])
+                ;
+    }
+
+    private function isAllCredentialsHasBeenSent() : bool
     {
         return  isset($_POST['username']) && !empty($_POST['username']) &&
                 isset($_POST['password']) && !empty($_POST['password'])

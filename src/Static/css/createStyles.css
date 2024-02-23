@@ -1,0 +1,70 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Inter", Arial
+}
+
+body {
+    background-color: #418393;
+}
+
+.main-window
+{
+    width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.inner {
+    width: 75vw;
+}
+
+.header {
+    display: flex;
+    justify-content: center;
+    background-color: blueviolet;
+    flex-grow: 1;
+    width: 100%;
+    min-height: 20px;
+}
+
+.header>.inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    flex-grow: 6;
+}
+
+.cur_user {
+    flex-grow: 3;
+}
+
+.create-field {
+    flex-grow: 15;
+    background-color: azure;
+}
+
+textarea {
+    resize: none;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: 5%;
+    padding: 10px;
+}
+
+.errmsg {
+    display: flex;
+    justify-content: center;
+    color: red;
+    align-items: flex-end;
+}

@@ -51,6 +51,18 @@ class NoteController extends \App\Core\Controller
         
         if ($this->isDataSent())
         {
+            if (!$this->isAllDataSent())
+            {
+                $viewData['fields'] = [
+                    'title' => $_POST['title'],
+                    'data' => $_POST['data']
+                ];
+
+                $viewData['err'][] = 'Fill all inputs';
+
+                $this->proceedView('createNote', $viewData);
+            }
+            
             $n = new NoteModel;
             $n->title = $_POST['title'];
             $n->data = $_POST['data'];
@@ -63,7 +75,40 @@ class NoteController extends \App\Core\Controller
     }
 
     public function edit($id)
-    {}
+    {
+        $u = UserModel::findById($_SESSION['logged_user_id']);
+        $n = NoteModel::findById($id);
+        if ($n->user_id !== $u->getId())
+            self::redirect('/note');
+
+        if (!$this->isDataSent())
+        {
+            $viewData['fields'] = [
+                'title' => $n->title,
+                'data' => $n->data
+            ];
+    
+            $this->proceedView('createNote', $viewData);    
+        }
+
+        if (!$this->isAllDataSent())
+        {
+            $viewData['fields'] = [
+                'title' => $n->title,
+                'data' => $n->data
+            ];
+
+            $viewData['err'][] = 'Fill all inputs';
+    
+            $this->proceedView('createNote', $viewData);
+        }
+
+        $n->title = $_POST['title'];
+        $n->data = $_POST['data'];
+        $n->save();
+
+        self::redirect('/note');
+    }
 
     public function delete($id)
     {
@@ -75,6 +120,13 @@ class NoteController extends \App\Core\Controller
     }
 
     private function isDataSent()
+    {
+        return  isset($_POST['title']) || !empty($_POST['title']) ||
+                isset($_POST['data']) || !empty($_POST['data'])
+                ;
+    }
+
+    private function isAllDataSent()
     {
         return  isset($_POST['title']) && !empty($_POST['title']) &&
                 isset($_POST['data']) && !empty($_POST['data'])

@@ -27,7 +27,9 @@ abstract class Controller
 
     protected function proceedView(string $filename, array $viewData)
     {
+        $elementsPath = "src/Views/Elements/";
         extract($viewData);
         require Config::$VIEWS_PATH . $filename . ".php";
+        die();
     }
 }

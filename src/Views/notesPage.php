@@ -1,36 +1,31 @@
-<?php
-    function insert_note($n)
-    {
-        echo '<div class="note-item">';
-        echo '<a class="note-item-show" href="/note/show/' . $n->getId() . '">' . $n->title . '</a>';
-        echo '<a class="note-item-delete" href="/note/delete/' . $n->getId() . '">' . 'delete' . '</a>';
-        echo '<a class="note-item-edit" href="/note/edit/' . $n->getId() . '">' . 'edit' . '</a>';
-        echo '</div>';
-    }
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="src/Static/css/notesStyles.css">
+    <?php include $elementsPath . "links.php"?>
+    <link rel="stylesheet" href="/src/Static/css/notesStyles.css">
     <meta charset="UTF-8">
     <title>Notes</title>
 </head>
 <body>
     <div class="main-window">
-        <div class="header">
-            <div class="inner">
-                <div class="logo">NOTES-APP</div>
-                <p class="cur_user">Currently logged as <?=$username?></p>
-                <a class="logout" href="/logout">Logout</a>
-            </div>
-        </div>
+        <?php include $elementsPath . "header.php" ?>
         <div class="content">
             <div class="inner">
+                <?php 
+                if (isset($n)) {
+                    foreach ($n as $i) {?>
+                        <div class="note-item">
+                            <div class="note-item-title"><?= $i->title?></div>
+                            <div class="note-item-nav">
+                                <a href="/note/edit/<?=$i->getId()?>" class="note-item-nav-button">edit</a>
+                                <a href="/note/delete/<?=$i->getId()?>" class="note-item-nav-button">delete</a>
+                            </div>
+                        </div>
                 <?php
-                foreach ($notes as $i)
-                    insert_note($i);
-                ?>
+                    }
+                } else {?>
+                    <div class="no-items">no items to show</div>  
+                <?php } ?>
             </div>
         </div>
     </div>
